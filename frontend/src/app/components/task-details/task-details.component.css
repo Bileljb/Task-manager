@@ -1,0 +1,82 @@
+.task-details-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #e3f2fd, #90caf9);
+  padding: 1rem;
+}
+
+.task-details-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  padding: 1.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #bbdefb;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.header h2 {
+  color: #1976d2;
+  font-size: 1.5rem;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: #1976d2;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.btn-close:hover {
+  transform: scale(1.2);
+}
+
+.content p {
+  margin: 0.5rem 0;
+  color: #37474f;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.btn-navigate {
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-navigate:hover {
+  background-color: #1565c0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

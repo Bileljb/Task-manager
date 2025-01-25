@@ -11,13 +11,13 @@
     </div>
     <ul class="menu">
       <li class="submenu">
-        <i class="fas fa-user" *ngIf="isCollapsed"></i> <!-- Icon when collapsed -->
+        <i class="fas fa-user" *ngIf="isCollapsed"></i>
         <ul>
           <li class="menu-item" *ngFor="let user of users">{{ user.name }}</li>
         </ul>
       </li>
       <li class="submenu">
-        <i class="fas fa-users" *ngIf="isCollapsed"></i> <!-- Icon when collapsed -->
+        <i class="fas fa-users" *ngIf="isCollapsed"></i>
         <ul>
           <li class="menu-item" *ngFor="let team of teams">{{ team.name }}</li>
         </ul>
@@ -37,10 +37,15 @@
     <div class="content">
       <div class="task-column" *ngFor="let status of taskStatus">
         <h3>{{ status.status | titlecase }}</h3>
-        <div *ngFor="let task of status.tasks" class="task-card">
+        <div *ngFor="let task of status.tasks" class="task-card" [routerLink]="['/task-details', task._id]"
+        >
           <p>{{ task.title }}</p>
+          <i class="fas fa-trash delete-icon" (click)="deleteTask(task)"></i>
         </div>
       </div>
     </div>
   </div>
+  <button class="add-button" (click)="addNewTask()">
+    <i class="fas fa-plus"></i>
+  </button>
 </div>

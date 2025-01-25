@@ -1,1 +1,22 @@
-<p>task-details works!</p>
+<div *ngIf="task" class="task-details-container">
+  <div class="task-details-card">
+    <div class="header">
+      <h2>{{ task.title }}</h2>
+      <button class="btn-close" (click)="closeDetails()">✖</button>
+    </div>
+    <div class="content">
+      <p><strong>Category:</strong> {{ task.category }}</p>
+      <p><strong>Priority:</strong> {{ task.priority }}</p>
+      <p><strong>Description:</strong> {{ task.description }}</p>
+      <p><strong>Deadline:</strong> {{ task.deadline | date: 'shortDate' }}</p>
+      <p><strong>Status:</strong> {{ task.status }}</p>
+      <p><strong>Created At:</strong> {{ task.createdAt | date: 'short' }}</p>
+      <p><strong>Last Updated:</strong> {{ task.updatedAt | date: 'short' }}</p>
+    </div>
+    <div class="actions">
+      <button class="btn-navigate" (click)="navigateToTaskBoard()">Go to Task Board</button>
+    </div>
+  </div>
+</div>
+
+

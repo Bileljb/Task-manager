@@ -1,38 +1,29 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, Input } from '@angular/core';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { TaskServiceService } from '../../services/task-service.service';
-import { HttpClient } from '@angular/common/http';
+import {Task, TaskCategory} from '../../models/task.model';
+import { RouterLink } from '@angular/router';
 
-interface Task {
-  title: string;
-  status: string;
-}
+import { taskStatus } from '../../States/taskState';
 
-interface TaskCategory {
-  status: string;
-  tasks: Task[];
-}
 
 @Component({
   selector: 'app-task-board',
-  imports: [NgIf, NgFor, CommonModule],
+  imports: [NgIf, NgFor, CommonModule, RouterLink],
   templateUrl: './task-board.component.html',
   styleUrls: ['./task-board.component.css'],
 })
 export class TaskBoardComponent implements OnInit {
+  taskStatus: TaskCategory[] = JSON.parse(JSON.stringify(taskStatus));
+  @Input() task?: Task
   private taskService = inject(TaskServiceService);
 
   // Sidebar logic
   isCollapsed = false;
   users = [{ name: 'Tom' }];
   teams = [{ name: 'Team 1' }];
+  
 
-  // Structure to store tasks by status
-  taskStatus: TaskCategory[] = [
-    { status: 'todo', tasks: [] },
-    { status: 'inProgress', tasks: [] },
-    { status: 'completed', tasks: [] },
-  ];
 
   ngOnInit(): void {
     this.getAllTasks();
@@ -43,15 +34,26 @@ export class TaskBoardComponent implements OnInit {
     this.taskService.getTasks().subscribe({
       next: (response: any) => {
         if (response.success && response.tasks) {
-  
+
           // Group tasks by status
           response.tasks.forEach((task: any) => {
             const category = this.taskStatus.find((item) => item.status === this.mapStatus(task.status));
             if (category) {
-              category.tasks.push({ title: task.title, status: task.status });
+              category.tasks.push({
+                _id: task._id,
+                title: task.title,
+                status: task.status,
+                description: task.description,
+                category: task.category,
+                priority: task.priority,
+                deadline: task.deadline,
+                createdBy: task.createdBy,
+                createdAt: task.createdAt,
+                updatedAt: task.updatedAt
+              });
             }
           });
-  
+
           console.log('Grouped tasks:', this.taskStatus);
         } else {
           console.error('Unexpected response format:', response);
@@ -62,14 +64,10 @@ export class TaskBoardComponent implements OnInit {
       },
     });
   }
-  
-
-
-  // Map API status values to local status keys
   mapStatus(apiStatus: string): string {
     switch (apiStatus) {
       case 'Todo':
-        return 'todo'; 
+        return 'todo';
       case 'In Progress':
         return 'inProgress';
       case 'Completed':
@@ -84,9 +82,20 @@ export class TaskBoardComponent implements OnInit {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  // Method to get tasks by their status
-  getTasksByStatus(status: string): Task[] {
-    const statusObject = this.taskStatus.find((item) => item.status === status);
-    return statusObject ? statusObject.tasks : [];
+  addNewTask() {
+    // Define what happens when the + button is clicked
+    console.log("Add button clicked! Implement your logic here.");
   }
+  
+  deleteTask(task: any): void {
+    // Replace with your actual logic to delete the task
+    console.log('Task deleted:', task);
+
+    // Example logic: Remove the task from the list
+    this.taskStatus.forEach(status => {
+      status.tasks = status.tasks.filter(t => t !== task);
+    });
+  }
+
 }
+

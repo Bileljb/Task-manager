@@ -11,8 +11,9 @@
     flex-direction: column;
 }
 
+/* Sidebar */
 .sidebar {
-    background-color: #001529; /* Sidebar background color */
+    background-color: #001529;
     width: 240px;
     transition: all 0.3s ease;
     position: fixed;
@@ -23,7 +24,7 @@
 }
 
 .sidebar.collapsed {
-    width: 80px; /* Reduced width when collapsed */
+    width: 80px;
 }
 
 .logo {
@@ -63,31 +64,30 @@
     cursor: pointer;
 }
 
-/* Sidebar Collapsed Styles */
 .sidebar.collapsed .menu-title {
-    display: none; /* Hide the menu titles when collapsed */
+    display: none;
 }
 
 .sidebar.collapsed .fas {
-    display: inline-block; /* Ensure icons are displayed */
+    display: inline-block;
     text-align: center;
-    width: 100%; /* Center align icons */
-    color: #fff; /* Keep icons white */
-    font-size: 20px; /* Adjust size if needed */
+    width: 100%;
+    color: #fff;
+    font-size: 20px;
 }
 
 .sidebar.collapsed .menu-item {
-    justify-content: center; /* Center icons horizontally */
-    padding: 15px; /* Adjust padding for better spacing */
+    justify-content: center;
+    padding: 15px;
 }
 
 .sidebar.collapsed .menu-item:hover {
-    background-color: #1890ff; /* Highlight background on hover */
-    color: #fff; /* Keep text and icons white */
+    background-color: #1890ff;
+    color: #fff;
 }
 
 .sidebar.collapsed .submenu ul {
-    display: none; /* Hide submenus when sidebar is collapsed */
+    display: none;
 }
 
 /* Header */
@@ -134,7 +134,7 @@
     height: 100vh;
     overflow-y: auto;
     transition: margin-left 0.3s ease;
-    margin-top: 60px; /* Margin between header and content */
+    margin-top: 60px;
 }
 
 .sidebar.collapsed + .main-layout {
@@ -144,7 +144,7 @@
 .content {
     display: flex;
     justify-content: space-between;
-    gap: 20px; /* Add gap between task columns */
+    gap: 20px;
     padding: 20px;
 }
 
@@ -158,23 +158,25 @@
 .task-column {
     width: 30%;
     padding: 10px;
-    background-color: rgba(24, 144, 255, 0.1); /* Transparent blue */
+    background-color: rgba(24, 144, 255, 0.1);
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Modern shadow */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
 .task-card {
-    background-color: rgba(24, 144, 255, 0.2); /* Slightly darker blue */
-    border-radius: 8px; /* Slight border radius for task cards */
-    padding: 15px; /* Padding inside task cards */
+    background-color: rgba(24, 144, 255, 0.2);
+    border-radius: 8px;
+    padding: 15px;
     margin-bottom: 10px;
-    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
 }
 
 .task-card:hover {
-    transform: scale(1.05); /* Slightly grow on hover */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Add more shadow on hover */
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .task-card p {
@@ -188,55 +190,59 @@
     font-size: 18px;
 }
 
-/* Responsive for Tablets and Phones */
-@media (max-width: 1024px) {
-    .layout {
-        flex-direction: column;
-    }
+/* Add Button */
+.add-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
 
-    .sidebar {
-        display: none; /* Hide the sidebar on smaller screens by default */
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 240px;
-        z-index: 1;
-        background-color: #001529; /* Sidebar background color */
-    }
+.add-button:hover {
+    background-color: #0d62b6;
+    transform: scale(1.1);
+}
 
-    .sidebar.visible {
-        display: block; /* Show sidebar when toggled */
-    }
+.add-button:focus {
+    outline: none;
+    box-shadow: 0 6px 15px rgba(24, 144, 255, 0.5);
+}
 
-    .main-layout {
-        margin-left: 0;
-    }
+.add-button i {
+    pointer-events: none;
+}
 
-    .task-column {
-        width: 45%; /* Increased width for task columns */
-        margin-bottom: 15px;
-    }
+/* Delete Icon */
+.delete-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ff4d4f;
+    font-size: 16px;
+    display: none;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
 
-    .toggle-button {
-        font-size: 28px;
-        background-color: transparent;
-        border: none;
-        color: #333;
-    }
+.task-card:hover .delete-icon {
+    display: block;
+}
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        background-color: #fff;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .logo-left {
-        font-size: 20px;
-        font-weight: bold;
-        color: #333;
-    }
+.delete-icon:hover {
+    color: #d9363e;
+    
 }

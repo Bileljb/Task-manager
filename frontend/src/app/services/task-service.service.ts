@@ -18,12 +18,13 @@ export class TaskServiceService {
   }
 
   // Get a task by ID
-  getTaskById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  getTaskById(taskId: string): Observable<any> {
+    const url = `${this.apiUrl}${taskId}`;
+    return this.http.get(url);
   }
 
   // Delete a task
-  deleteTask(id: number): Observable<any> {
+  deleteTask(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
