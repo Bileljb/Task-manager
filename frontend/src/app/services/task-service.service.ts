@@ -29,7 +29,12 @@ export class TaskServiceService {
   }
 
   // Update a task
-  updateTask(id: number, task: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, task);
-  }
+  updateTask(task: any): Observable<any> {
+  const taskId = task._id; 
+  const updateUrl = `${this.apiUrl}update/${taskId}`; 
+  console.log('Updating task with ID:', taskId);  
+  return this.http.put(updateUrl, task); 
+}
+
+  
 }

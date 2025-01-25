@@ -80,3 +80,34 @@
     transform: translateY(0);
   }
 }
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #1976d2;
+}
+
+.form-group select,
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #bbdefb;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  border-color: #1976d2;
+}
+
+.actions {
+  text-align: center;
+  margin-top: 1.5rem;
+}
