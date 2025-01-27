@@ -87,15 +87,25 @@ export class TaskBoardComponent implements OnInit {
     console.log("Add button clicked! Implement your logic here.");
   }
   
-  deleteTask(task: any): void {
-    // Replace with your actual logic to delete the task
-    console.log('Task deleted:', task);
-
-    // Example logic: Remove the task from the list
-    this.taskStatus.forEach(status => {
-      status.tasks = status.tasks.filter(t => t !== task);
-    });
+  deleteTask(taskId: string): void {
+    if (confirm('Are you sure you want to delete this task?')) {
+      this.taskService.deleteTask(taskId).subscribe({
+        next: (response) => {
+          if (response.success) {
+            // Iterate through taskStatus categories and remove the task with the given ID
+            this.taskStatus.forEach((category) => {
+              category.tasks = category.tasks.filter((task) => task._id !== taskId);
+            });
+            console.log('Task deleted successfully:', response.message);
+          }
+        },
+        error: (err) => {
+          console.error('Failed to delete task:', err);
+        },
+      });
+    }
   }
+  
 
 }
 

@@ -40,7 +40,7 @@
         <div *ngFor="let task of status.tasks" class="task-card" [routerLink]="['/task-details', task._id]"
         >
           <p>{{ task.title }}</p>
-          <i class="fas fa-trash delete-icon" (click)="deleteTask(task)"></i>
+          <i class="fas fa-trash delete-icon" (click)="deleteTask(task._id)"></i>
         </div>
       </div>
     </div>
