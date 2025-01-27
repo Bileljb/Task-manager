@@ -41,6 +41,10 @@ export class TaskServiceService {
   console.log('Updating task with ID:', taskId);  
   return this.http.put(updateUrl, task); 
 }
+// drag and drop by the status of the task (e.g. 'Todo', 'In Progress', 'Completed')
+updateTaskStatus(taskId: string, status: string): Observable<any> {
+  return this.http.patch(`${this.apiUrl}/${taskId}/status`, { status });
+}
 
   
 }

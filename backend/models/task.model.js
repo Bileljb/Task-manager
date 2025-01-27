@@ -26,17 +26,17 @@ const taskSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['Todo', 'In Progress', 'Completed'], 
-    default: 'Pending'
+    default: 'In Progress'
   },
   deadline: {
     type: Date, // Optional, to set deadlines for tasks
     default: null
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', // Reference to the User collection
-    required: true
-  },
+  // createdBy: {
+  //   type: mongoose.Schema.Types.ObjectId, 
+  //   ref: 'User', // Reference to the User collection
+  //   required: true
+  // },
   createdAt: {
     type: Date,
     default: Date.now 

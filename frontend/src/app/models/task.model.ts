@@ -6,9 +6,9 @@ export class Task {
     priority!: 'Low' | 'Medium' | 'High'; // Enum
     status!: 'Todo' | 'In Progress' | 'Completed'; // Enum
     deadline?: Date | null; // Optional
-    createdBy!: string; // ObjectId (as a string in TypeScript)
+    createdBy!: string; 
     createdAt!: Date;
-    updatedAt?: Date | null; // Optional
+    updatedAt?: Date | null; 
 }
 
 export class TaskCategory {

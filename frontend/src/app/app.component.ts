@@ -4,7 +4,7 @@ import { TaskBoardComponent } from './components/task-board/task-board.component
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TaskBoardComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

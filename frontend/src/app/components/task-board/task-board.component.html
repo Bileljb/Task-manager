@@ -35,17 +35,27 @@
 
     <!-- Content -->
     <div class="content">
-      <div class="task-column" *ngFor="let status of taskStatus">
+      <div 
+        class="task-column" 
+        *ngFor="let status of taskStatus" 
+        cdkDropList 
+        [cdkDropListData]="status.tasks" 
+        (cdkDropListDropped)="drop($event, status.status)"
+      >
         <h3>{{ status.status | titlecase }}</h3>
-        <div *ngFor="let task of status.tasks" class="task-card" [routerLink]="['/task-details', task._id]"
+        <div 
+          *ngFor="let task of status.tasks" 
+          class="task-card" 
+          cdkDrag 
+          [routerLink]="['/task-details', task._id]"
         >
           <p>{{ task.title }}</p>
-          <i class="fas fa-trash delete-icon" (click)="deleteTask(task._id)"></i>
+          <i class="fas fa-trash delete-icon" (click)="deleteTask($event, task._id)"></i>
         </div>
       </div>
     </div>
   </div>
-  <button class="add-button" (click)="addNewTask()">
+  <button class="add-button" [routerLink]="['/create-new-task']">
     <i class="fas fa-plus"></i>
   </button>
 </div>
