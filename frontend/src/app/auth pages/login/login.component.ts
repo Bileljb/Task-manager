@@ -20,8 +20,10 @@ export class LoginComponent {
 
   onLogin() {
     if (this.email && this.password) {
+      
       this.authService.login(this.email, this.password).subscribe(
         (response) => {
+          localStorage.setItem('token', response.token);
           this.successMessage = response.message;
           this.router.navigate(['/']); // Redirect to the dashboard on success
         },

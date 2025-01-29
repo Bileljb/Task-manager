@@ -3,8 +3,7 @@ import { createTask, deleteTask, getAllTasks, getTask, searchTask, updateTask } 
 import { verifyToken } from '../middlewares/verifyToken.js'
 const taskRoutes = express.Router()
 
-taskRoutes.post('/create-new-task', verifyToken, createTask)
-// taskRoutes.post('/create-new-task', createTask)
+taskRoutes.post('/create-new-task', createTask)
 taskRoutes.get('/', getAllTasks)
 taskRoutes.get('/search', searchTask)
 taskRoutes.get('/:id', getTask)

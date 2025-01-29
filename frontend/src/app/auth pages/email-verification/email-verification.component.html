@@ -1,0 +1,15 @@
+<div class="verify-email-container">
+    <div class="verify-email-card">
+      <h2 class="verify-email-title">Verify Your Email</h2>
+      <form (ngSubmit)="onVerifyEmail()">
+        <div class="form-group">
+          <label for="code">Verification Code</label>
+          <input type="text" id="code" [(ngModel)]="code" name="code" class="form-control" placeholder="Enter your verification code" required />
+        </div>
+        <button type="submit" class="verify-email-button">Verify</button>
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+      </form>
+    </div>
+  </div>
+  

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { HttpHeaders } from '@angular/common/http'; 
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,15 @@ export class TaskServiceService {
   }
   // Create a new task
   createTask(task: any): Observable<any> {
+    const token = localStorage.getItem('token'); // Or use sessionStorage or cookies
+    if (!token) {
+      console.error('No token found');
+      return new Observable();
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`, // Add token in the headers
+    });
     const url = `${this.apiUrl}create-new-task`;
     return this.http.post(url, task);
   }

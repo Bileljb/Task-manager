@@ -29,7 +29,7 @@ export class SignupComponent {
       next: (response: { success: boolean; user: any }) => {
         if (response.success && response.user) {
           console.log('User created successfully:', response.user);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/verify-email']);
         }
       },
       error: (err: any) => {
