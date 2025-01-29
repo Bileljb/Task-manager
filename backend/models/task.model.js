@@ -32,11 +32,11 @@ const taskSchema = new mongoose.Schema({
     type: Date, // Optional, to set deadlines for tasks
     default: null
   },
-  // createdBy: {
-  //   type: mongoose.Schema.Types.ObjectId, 
-  //   ref: 'User', // Reference to the User collection
-  //   required: true
-  // },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User', // Reference to the User collection
+    required: true
+  },
   createdAt: {
     type: Date,
     default: Date.now 

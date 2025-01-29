@@ -2,7 +2,7 @@ import { Task } from "../models/task.model.js";
 import { User } from "../models/user.model.js";
 
 export const createTask = async (req, res) => {
-    // const createdBy = req.userId; 
+    const createdBy = req.userId; 
     const { title, description, category, priority,status, deadline } = req.body;
 
     try {
@@ -20,25 +20,25 @@ export const createTask = async (req, res) => {
             category,
             priority,
             deadline,
-            // createdBy,
+            createdBy,
             status
         });
 
         // Find the user by ID
-        // const user = await User.findById(createdBy);
-        // if (!user) {
-        //     return res.status(404).json({
-        //         success: false,
-        //         message: "User not found",
-        //     });
-        // }
+        const user = await User.findById(createdBy);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
 
         // Push task ID to the user's task list
-        // user.tasks.push(task._id);
+        user.tasks.push(task._id);
 
         // Save both task and user
         await task.save();
-        // await user.save();
+        await user.save();
 
         res.status(201).json({
             success: true,
