@@ -5,12 +5,18 @@ import { CreateTaskComponent } from './components/create-task/create-task.compon
 import { LoginComponent } from './auth pages/login/login.component';
 import { SignupComponent } from './auth pages/signup/signup.component';
 import { EmailVerificationComponent } from './auth pages/email-verification/email-verification.component';
+import { HomeComponent } from './components/home-page/home-page.component';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo:'task-board',
+        redirectTo:'',
         pathMatch:"full"
+
+    },
+    {
+        path: '',
+        component: HomeComponent
 
     },
     {

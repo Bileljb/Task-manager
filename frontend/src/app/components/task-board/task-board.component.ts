@@ -124,5 +124,11 @@ export class TaskBoardComponent implements OnInit {
         console.error('Invalid status:', newStatus);
       }
     }
-  }}
+  }
+  logout(): void {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+
+}
 

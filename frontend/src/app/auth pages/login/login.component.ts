@@ -25,7 +25,7 @@ export class LoginComponent {
         (response) => {
           localStorage.setItem('token', response.token);
           this.successMessage = response.message;
-          this.router.navigate(['/']); // Redirect to the dashboard on success
+          this.router.navigate(['/task-board']); // Redirect to the dashboard on success
         },
         (error) => {
           this.errorMessage = error;

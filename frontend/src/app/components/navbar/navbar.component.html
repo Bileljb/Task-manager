@@ -1,0 +1,13 @@
+<nav class="navbar">
+  <a [routerLink]="['/']" class="logo">Task Manager</a>
+  
+  <div *ngIf="!isAuthenticated" class="auth-links">
+    <a [routerLink]="['/login']" class="btn btn-primary">Login</a>
+    <a [routerLink]="['/signup']" class="btn btn-primary">Signup</a>
+  </div>
+  
+  <div *ngIf="isAuthenticated" class="auth-links">
+    <a [routerLink]="['/task-board']" routerLinkActive="active" class="btn btn-primary">Task Board</a>
+    <button class="btn btn-danger" >Logout</button>
+  </div>
+</nav>
