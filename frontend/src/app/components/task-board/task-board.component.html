@@ -1,0 +1,65 @@
+<div class="layout">
+  <!-- Sidebar -->
+  <div class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="logo">
+      <i 
+        class="fas" 
+        [ngClass]="isCollapsed ? 'fa-clipboard' : 'fa-bars'" 
+        *ngIf="isCollapsed">
+      </i>
+      <span *ngIf="!isCollapsed">My Task Manager</span>
+    </div>
+    <ul class="menu">
+      <li class="submenu">
+        <i class="fas fa-user" *ngIf="isCollapsed"></i>
+        <ul>
+          <li class="menu-item" *ngFor="let user of users">{{ user.name }}</li>
+        </ul>
+      </li>
+      <li class="submenu">
+        <i class="fas fa-users" *ngIf="isCollapsed"></i>
+        <ul>
+          <li class="menu-item" *ngFor="let team of teams">{{ team.name }}</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="main-layout">
+    <header class="header">
+      <button class="toggle-button" (click)="toggleSidebar()">
+        <i class="fas" [ngClass]="isCollapsed ? 'fa-bars' : 'fa-times'"></i>
+      </button>
+      <!-- //Logout button -->
+      <button class="logout-button" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+      </button> 
+    </header>
+
+    <!-- Content -->
+    <div class="content">
+      <div 
+        class="task-column" 
+        *ngFor="let status of taskStatus" 
+        cdkDropList 
+        [cdkDropListData]="status.tasks" 
+        (cdkDropListDropped)="drop($event, status.status)"
+      >
+        <h3>{{ status.status | titlecase }}</h3>
+        <div 
+          *ngFor="let task of status.tasks" 
+          class="task-card" 
+          cdkDrag 
+          [routerLink]="['/task-details', task._id]"
+        >
+          <p>{{ task.title }}</p>
+          <i class="fas fa-trash delete-icon" (click)="deleteTask($event, task._id)"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="add-button" [routerLink]="['/create-new-task']">
+    <i class="fas fa-plus"></i>
+  </button>
+</div>

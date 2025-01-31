@@ -1,0 +1,92 @@
+<!-- src/app/components/signup/signup.component.html -->
+<div
+  class="signup-container max-w-md w-full bg-gray-800 bg-opacity-50 backdrop-filter backdrop-blur-xl rounded-2xl shadow-xl overflow-hidden"
+>
+  <div class="p-8">
+    <h2
+      class="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text"
+    >
+      Create Account
+    </h2>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="firstname" class="sr-only">First Name</label>
+        <div class="input-group">
+          <span class="input-icon">👤</span>
+          <input
+            type="text"
+            id="firstname"
+            class="form-control"
+            placeholder="First Name"
+            [(ngModel)]="user.firstname"
+            name="firstname"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastname" class="sr-only">Last Name</label>
+        <div class="input-group">
+          <span class="input-icon">👤</span>
+          <input
+            type="text"
+            id="lastname"
+            class="form-control"
+            placeholder="Last Name"
+            [(ngModel)]="user.lastname"
+            name="lastname"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="sr-only">Email Address</label>
+        <div class="input-group">
+          <span class="input-icon">📧</span>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            placeholder="Email Address"
+            [(ngModel)]="user.email"
+            name="email"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password" class="sr-only">Password</label>
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            placeholder="Password"
+            [(ngModel)]="user.password"
+            name="password"
+            required
+          />
+        </div>
+      </div>
+      <button
+        class="mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200"
+        type="submit"
+      >
+        Sign Up
+      </button>
+    </form>
+  </div>
+  <div class="px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center">
+    <p class="text-sm text-gray-400">
+      Already have an account?
+      <a
+        [routerLink]="['/login']"
+        routerLinkActive="router-link-active"
+        class="text-green-400 hover:underline"
+        >Login</a
+      >
+    </p>
+  </div>
+</div>

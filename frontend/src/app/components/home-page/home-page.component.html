@@ -1,0 +1,7 @@
+<app-navbar></app-navbar>
+<div class="home-container">
+    <h1 class="home-title">Welcome to Task Manager</h1>
+    <p class="home-subtitle">Organize your tasks efficiently and boost productivity.</p>
+    <a routerLink="/dashboard" *ngIf="isAuthenticated" class="home-btn">Go to Dashboard</a>
+    <a routerLink="/login" *ngIf="!isAuthenticated" class="home-btn">Get Started</a>
+  </div>  
