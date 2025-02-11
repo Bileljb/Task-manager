@@ -21,9 +21,10 @@ export class TaskBoardComponent implements OnInit {
 
   // Sidebar logic
   isCollapsed = false;
-  users = [{ name: 'Tom' }];
+  userData = localStorage.getItem('user') || 'Guest'
+  user = this.userData? JSON.parse(this.userData) : null
   teams = [{ name: 'Team 1' }];
-  
+
 
 
   ngOnInit(): void {

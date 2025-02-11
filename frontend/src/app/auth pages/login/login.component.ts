@@ -24,11 +24,12 @@ export class LoginComponent {
       this.authService.login(this.email, this.password).subscribe(
         (response) => {
           localStorage.setItem('token', response.token);
+          localStorage.setItem('user', JSON.stringify(response.user));
           this.successMessage = response.message;
           this.router.navigate(['/task-board']); // Redirect to the dashboard on success
         },
         (error) => {
-          this.errorMessage = error;
+          this.errorMessage = error.error?.message 
         }
       );
     }

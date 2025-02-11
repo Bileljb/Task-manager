@@ -43,6 +43,8 @@
         <p><strong>Created At:</strong> {{ task.createdAt | date: 'short' }}</p>
         <p><strong>Last Updated:</strong> {{ task.updatedAt | date: 'short' }}</p>
       </div>
+      <div *ngIf="successMessage">{{successMessage}}</div>
+      <div *ngIf="errorMessage">{{errorMessage}}</div>
       <div class="actions">
         <button type="submit" class="btn-navigate">Save Changes</button>
       </div>

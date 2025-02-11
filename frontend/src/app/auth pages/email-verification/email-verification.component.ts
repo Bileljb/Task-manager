@@ -26,7 +26,7 @@ export class EmailVerificationComponent{
           }, 2000);
         },
         (error) => {
-          this.errorMessage = error;
+          this.errorMessage = error.error?.message;
         }
       );
     } else {

@@ -17,24 +17,13 @@ export class AuthServiceService {
     return this.http.post(`${this.apiUrl}/signup`, user);
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<any> {
     const loginData = { email, password };
-    return this.http.post<any>(`${this.apiUrl}/login`, loginData).pipe(
-    );
+    return this.http.post<any>(`${this.apiUrl}/login`, loginData).pipe();
   }
 
-  verifyEmail(code: string) {
+  verifyEmail(code: string): Observable<any> {
     const verificationData = { code };
-    return this.http.post<any>(`${this.apiUrl}/verify-email`, verificationData).pipe(
-    );
-  }
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An error occurred';
-    if (error.error instanceof ErrorEvent) {
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      errorMessage = `Backend returned code ${error.status}, body was: ${error.error.message}`;
-    }
-    return throwError(errorMessage);
+    return this.http.post<any>(`${this.apiUrl}/verify-email`, verificationData);
   }
 }

@@ -8,7 +8,7 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class TaskServiceService {
 
-  apiUrl = 'http://localhost:5000/api/tasks/'; // Backend API URL
+  apiUrl = 'http://localhost:5000/api/tasks/'; 
 
   constructor(private http: HttpClient) {}
 
@@ -18,15 +18,15 @@ export class TaskServiceService {
   }
   // Create a new task
   createTask(task: any): Observable<any> {
-    const token = localStorage.getItem('token'); // Or use sessionStorage or cookies
-    if (!token) {
-      console.error('No token found');
-      return new Observable();
-    }
+    // const token = localStorage.getItem('token'); 
+    // if (!token) {
+    //   console.error('No token found');
+    //   return new Observable();
+    // }
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`, // Add token in the headers
-    });
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${token}`, 
+    // });
     const url = `${this.apiUrl}create-new-task`;
     return this.http.post(url, task);
   }

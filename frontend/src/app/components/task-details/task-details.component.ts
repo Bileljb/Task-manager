@@ -18,6 +18,8 @@ export class TaskDetailsComponent implements OnInit {
   categories = ['Work', 'Personal', 'Study', 'Other'];
   priorities = ['Low', 'Medium', 'High'];
   statuses = ['Todo', 'In Progress', 'Completed'];
+  errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -54,31 +56,31 @@ export class TaskDetailsComponent implements OnInit {
     });
   }
 
-  updateTask(): void {
-    if (!this.editableTask._id) {
-      console.error('Task ID is missing or invalid!');
-      return;
-    }
-    
-    const updatedTask = {
-      ...this.editableTask,
-      updatedAt: new Date(),  // Update the timestamp
-    };
-    
-    console.log('Attempting to update task:', updatedTask); // Log the task to ensure the ID is correct
+  updateTask() {
+    if (this.editableTask._id) {
+      const updatedTask = {
+        ...this.editableTask,
+        updatedAt: new Date(), // Update the timestamp
+      };
   
-    this.taskService.updateTask(updatedTask).subscribe({
-      next: (response: { success: boolean; task: any }) => {
-        if (response.success) {
-          this.task = response.task;  
-          console.log('Task updated successfully:', this.task);
+      console.log('Attempting to update task:', updatedTask);
+  
+      this.taskService.updateTask(updatedTask).subscribe(
+        (response) => {
+          if (response.success) {
+            this.task = response.task;
+            console.log('Task updated successfully:', this.task);
+          }
+        },
+        (error) => {
+          this.errorMessage = error.error?.message;
         }
-      },
-      error: (err: any) => {
-        console.error('Failed to update task:', err);
-      },
-    });
+      );
+    } else {
+      console.error('Task ID is missing or invalid!');
+    }
   }
+  
   
 
   closeDetails(): void {

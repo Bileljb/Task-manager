@@ -121,6 +121,7 @@ export const deleteTask = async (req, res) => {
 export const updateTask = async (req, res) => {
     const { id } = req.params;
     const { title, description, category, priority, deadline, status } = req.body;
+    // const BODY = [...req.body];
 
     try {
         // Update the task in one step

@@ -24,6 +24,7 @@ export const signUp = async (req, res) => {
             verificationToken: verificationToken,
             verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000
         })
+        
         await user.save()
         generateTokenAndSetCookies(res, user._id)
         await sendVerificationEmail(user.email, verificationToken)
