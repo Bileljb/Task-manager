@@ -26,4 +26,9 @@ export class AuthServiceService {
     const verificationData = { code };
     return this.http.post<any>(`${this.apiUrl}/verify-email`, verificationData);
   }
+
+  isAuthenticated(): boolean {
+    const user = localStorage.getItem('user'); 
+    return !!user; 
+  }
 }

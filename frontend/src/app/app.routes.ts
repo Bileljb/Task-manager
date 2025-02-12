@@ -6,6 +6,7 @@ import { LoginComponent } from './auth pages/login/login.component';
 import { SignupComponent } from './auth pages/signup/signup.component';
 import { EmailVerificationComponent } from './auth pages/email-verification/email-verification.component';
 import { HomeComponent } from './components/home-page/home-page.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -21,15 +22,18 @@ export const routes: Routes = [
     },
     {
         path:'task-board',
-        component:TaskBoardComponent
+        component:TaskBoardComponent,
+        canActivate: [authGuard],
     },
     {
         path:'task-details/:id',
-        component:TaskDetailsComponent
+        component:TaskDetailsComponent,
+        canActivate: [authGuard],
     },
     {
         path:'create-new-task',
-        component: CreateTaskComponent
+        component: CreateTaskComponent,
+        canActivate: [authGuard],
     },
     {
         path:'login',
