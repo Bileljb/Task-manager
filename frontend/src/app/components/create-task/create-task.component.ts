@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TaskServiceService } from '../../services/task-service.service';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
-import { Task } from '../../models/task.model';
 @Component({
   selector: 'app-create-task',
   imports: [NgFor, FormsModule, ReactiveFormsModule, CommonModule],
@@ -12,13 +11,15 @@ import { Task } from '../../models/task.model';
 })
 export class CreateTaskComponent {
   @Output() close = new EventEmitter<void>();
-  // task !:Task
+  userData = localStorage.getItem('user')
+  userId = this.userData ? JSON.parse(this.userData)._id : null;
   task: any = {
     title: '',
     category: '',
     priority: '',
     status: '',
-    deadline: ''
+    deadline: '',
+    createdBy: this.userId,
   };
   successMessage: string = '';
   errorMessage: string = '';
@@ -36,6 +37,7 @@ export class CreateTaskComponent {
 
   createTask() {
     if (this.task) {
+      this.task.createdBy = this.userId;
       this.taskService.createTask(this.task).subscribe(
         (response) => {
           if (response.success && response.task) {

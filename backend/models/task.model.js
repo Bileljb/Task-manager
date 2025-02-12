@@ -29,14 +29,14 @@ const taskSchema = new mongoose.Schema({
     default: 'In Progress'
   },
   deadline: {
-    type: Date, // Optional, to set deadlines for tasks
+    type: Date, 
     default: null
   },
-  // createdBy: {
-  //   type: mongoose.Schema.Types.ObjectId, 
-  //   ref: 'User', // Reference to the User collection
-  //   required: true
-  // },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'User', // Reference to the User collection
+    required: true
+  },
   createdAt: {
     type: Date,
     default: Date.now 
