@@ -7,6 +7,8 @@ import { SignupComponent } from './auth pages/signup/signup.component';
 import { EmailVerificationComponent } from './auth pages/email-verification/email-verification.component';
 import { HomeComponent } from './components/home-page/home-page.component';
 import { authGuard } from './guards/auth.guard';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
 
 export const routes: Routes = [
     {
@@ -38,6 +40,15 @@ export const routes: Routes = [
     {
         path:'login',
         component:LoginComponent
+    },
+    {
+        path:'tm-admin',
+        component:AdminDashboardComponent,
+        // canActivate: [authGuard]
+    },
+    {
+        path:'employee-profile/:id',
+        component: ProfilePageComponent
     },
     {
         path:'signup',

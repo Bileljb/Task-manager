@@ -1,0 +1,101 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.sidebar img {
+    border: 4px solid #4caf50;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h3 {
+    margin-top: 15px;
+    font-size: 22px;
+}
+
+.sidebar a {
+    display: block;
+    margin-top: 10px;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.sidebar a:hover {
+    color: #4caf50;
+}
+
+/* About section */
+.about {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    min-height: 200px; /* Ensuring height matches recent tasks visually */
+}
+
+/* Right Content */
+.right-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Recent Tasks */
+.recent-tasks {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex-grow: 1;
+}
+
+h1 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #eee;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.col-md-3 {
+    font-weight: 500;
+}
+
+.col-md-9 {
+    color: #777;
+}

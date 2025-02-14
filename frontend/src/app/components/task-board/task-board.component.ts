@@ -91,9 +91,9 @@ export class TaskBoardComponent implements OnInit {
       this.taskService.deleteTask(taskId).subscribe({
         next: (response) => {
           if (response.success) {
-            // Iterate through taskStatus categories and remove the task with the given ID
             this.taskStatus.forEach((category) => {
               category.tasks = category.tasks.filter((task) => task._id !== taskId);
+              
             });
             console.log('Task deleted successfully:', response.message);
           }
@@ -129,7 +129,7 @@ export class TaskBoardComponent implements OnInit {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user')
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
 }
