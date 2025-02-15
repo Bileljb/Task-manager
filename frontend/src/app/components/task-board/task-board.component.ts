@@ -21,11 +21,10 @@ export class TaskBoardComponent implements OnInit {
 
   // Sidebar logic
   isCollapsed = false;
-  userData = localStorage.getItem('user') || 'Guest'
+  userData = localStorage.getItem('user') 
   user = this.userData? JSON.parse(this.userData) : null
-  teams = [{ name: 'Team 1' }];
 
-
+ 
 
   ngOnInit(): void {
     this.getAllTasks();
@@ -39,7 +38,7 @@ export class TaskBoardComponent implements OnInit {
 
           // Group tasks by status
           response.tasks.forEach((task: any) => {
-            const category = this.taskStatus.find((item) => item.status === this.mapStatus(task.status));
+            const category = this.taskStatus.find((item) => {return item.status === this.mapStatus(task.status) && this.user._id == task.createdBy});
             if (category) {
               category.tasks.push({
                 _id: task._id,
