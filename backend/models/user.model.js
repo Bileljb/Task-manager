@@ -12,6 +12,8 @@ const Userschema = new mongoose.Schema({
         default: 'user',
         
     },
+    team: {type: String},
+    position: {type: String},
     tasks: [
         {
           type: mongoose.Schema.Types.ObjectId,

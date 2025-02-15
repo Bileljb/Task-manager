@@ -124,7 +124,6 @@ export const updateTask = async (req, res) => {
     // const BODY = [...req.body];
 
     try {
-        // Update the task in one step
         const task = await Task.findByIdAndUpdate(
             id, 
             {
@@ -136,10 +135,9 @@ export const updateTask = async (req, res) => {
                 status,
                 updatedAt: Date.now()
             },
-            { new: true } // Returns the updated document
+            { new: true } 
         );
 
-        // Handle case when the task is not found
         if (!task) {
             return res.status(404).json({
                 success: false,
@@ -147,7 +145,6 @@ export const updateTask = async (req, res) => {
             });
         }
 
-        // Send the updated task as a response
         res.status(200).json({
             success: true,
             message: "Task updated successfully!",
