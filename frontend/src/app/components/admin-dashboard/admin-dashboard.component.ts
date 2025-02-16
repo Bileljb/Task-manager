@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AdminService } from '../../services/adminService/admin.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -15,7 +17,9 @@ import { Router, RouterLink } from '@angular/router';
 export class AdminDashboardComponent {
 
   constructor(private router: Router) {}
-
+  private adminService = inject(AdminService)
+  
+  employees: any[] = []
   isCollapsed = false;
   userData = localStorage.getItem('user') 
   user = this.userData? JSON.parse(this.userData) : null
@@ -30,4 +34,17 @@ export class AdminDashboardComponent {
     localStorage.removeItem('user')
     this.router.navigate(['/']);
   }
+  ngOnInit(): void {
+    this.getAllEmployees()
+    
+  }
+  getAllEmployees(){
+     this.adminService.getEmployees().subscribe(data => {
+      this.employees = data.employees
+      console.log(data); 
+    });
+  }
+  
+
 }
+

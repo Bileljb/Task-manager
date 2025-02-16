@@ -13,14 +13,24 @@
         <li class="submenu">
           <i class="fas fa-user" *ngIf="isCollapsed"></i>
           <ul>
-            <!-- <li class="menu-item" >{{ user.firstname}}</li> -->
-            <li class="menu-item" >John Doe</li>
+            <li class="menu-item">{{ user.firstname }}</li>
           </ul>
         </li>
         <li class="submenu">
           <i class="fas fa-users" *ngIf="isCollapsed"></i>
           <ul>
-            <li class="menu-item" >Admin</li>
+            <li class="menu-item" >{{ user.team || 'Admin'}}</li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <i class="fas fa-users" *ngIf="isCollapsed"></i>
+          <ul >
+            <li class="menu-item" >{{ user.position }}</li>
+          </ul>
+        </li>
+        <li class="submenu">
+          <ul>
+            <li class="menu-item" *ngIf="user.role == 'admin'" [routerLink]="['/task-board']">Task Board</li>
           </ul>
         </li>
       </ul>
@@ -51,11 +61,12 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>John Doe</td>
+            <tbody >
+                <tr *ngFor="let employee of employees">
+                    <td>{{employee.firstname}} </td>
                     <td>
                         <select>
+                            <option disabled selected>{{employee.position}}</option>
                             <option>Full Stack Developer</option>
                             <option>Designer</option>
                             <option>DevOps Engineer</option>
@@ -63,6 +74,7 @@
                     </td>
                     <td>
                         <select>
+                            <option disabled selected>{{employee.team}}</option>
                             <option>Team 1</option>
                             <option>Team 2</option>
                             <option>Team 3</option>
@@ -71,44 +83,7 @@
                     <td>0.82</td>
                     <td><button class="profile-btn" [routerLink]="['/employee-profile/:id']">Profile</button></td>
                 </tr>
-                <tr>
-                    <td>Jane Smith</td>
-                    <td>
-                        <select>
-                            <option>Designer</option>
-                            <option>Full Stack Developer</option>
-                            <option>DevOps Engineer</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select>
-                            <option>Team 2</option>
-                            <option>Team 1</option>
-                            <option>Team 3</option>
-                        </select>
-                    </td>
-                    <td>0.91</td>
-                    <td><button class="profile-btn" [routerLink]="['/employee-profile/:id']">Profile</button></td>
-                </tr>
-                <tr>
-                    <td>Michael Brown</td>
-                    <td>
-                        <select>
-                            <option>DevOps Engineer</option>
-                            <option>Full Stack Developer</option>
-                            <option>Designer</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select>
-                            <option>Team 3</option>
-                            <option>Team 1</option>
-                            <option>Team 2</option>
-                        </select>
-                    </td>
-                    <td>0.75</td>
-                    <td><button class="profile-btn" [routerLink]="['/employee-profile/:id']">Profile</button></td>
-                </tr>
+                
             </tbody>
         </table>
        </div>

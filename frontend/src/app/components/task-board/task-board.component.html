@@ -13,13 +13,24 @@
       <li class="submenu">
         <i class="fas fa-user" *ngIf="isCollapsed"></i>
         <ul>
-          <li class="menu-item" >{{ user.firstname }}</li>
+          <li class="menu-item">{{ user.firstname }}</li>
         </ul>
       </li>
       <li class="submenu">
         <i class="fas fa-users" *ngIf="isCollapsed"></i>
         <ul>
-          <li class="menu-item" >{{ user.team}}</li>
+          <li class="menu-item" >{{ user.team || 'Admin'}}</li>
+        </ul>
+      </li>
+      <li class="submenu">
+        <i class="fas fa-users" *ngIf="isCollapsed"></i>
+        <ul >
+          <li class="menu-item" >{{ user.position }}</li>
+        </ul>
+      </li>
+      <li class="submenu">
+        <ul>
+          <li class="menu-item" *ngIf="user.role == 'admin'" [routerLink]="['/tm-admin']">Dashboard</li>
         </ul>
       </li>
     </ul>
