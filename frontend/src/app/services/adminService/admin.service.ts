@@ -7,11 +7,17 @@ import { Observable } from 'rxjs';
 export class AdminService {
 
   constructor(private http: HttpClient) { }
-  private employees = 'http://localhost:5000/api/admin/employees'; 
+  private baseUrl = 'http://localhost:5000/api/admin/'; 
   getEmployees(): Observable<{ success: boolean; message: string; employees: any[] }> {
-    return this.http.get<{ success: boolean; message: string; employees: any[] }>(this.employees);
+    return this.http.get<{ success: boolean; message: string; employees: any[] }>(`${this.baseUrl}employees`);
   }
-  
-  
+
+  getEmployeeById(employeeId: string): Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}employee/${employeeId}`);
+  }
+
+
 
 }
+
+ 

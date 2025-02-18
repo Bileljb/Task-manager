@@ -90,7 +90,7 @@ export const setTask = async (req, res) => {
         if (!title || !createdBy) {
             return res.status(400).json({
                 success: false,
-                message: "Required fields messed!",
+                message: "Required fields missed!",
             });
         }
         // Create a new task
@@ -100,6 +100,7 @@ export const setTask = async (req, res) => {
             category,
             priority,
             deadline,
+            // createdBy supposed to be setto (the admin will set a task to a specific employee)
             createdBy,
         });
 

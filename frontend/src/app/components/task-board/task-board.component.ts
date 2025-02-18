@@ -15,56 +15,58 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 })
 export class TaskBoardComponent implements OnInit {
   constructor(private router: Router) {}
-  taskStatus: TaskCategory[] = JSON.parse(JSON.stringify(taskStatus));
-  @Input() task?: Task
-  private taskService = inject(TaskServiceService);
 
+  taskStatus: TaskCategory[] = JSON.parse(JSON.stringify(taskStatus));
+  @Input() task?: Task;
+  private taskService = inject(TaskServiceService);
+  
   // Sidebar logic
   isCollapsed = false;
-  userData = localStorage.getItem('user') 
-  user = this.userData? JSON.parse(this.userData) : null
-
- 
-
+  userData = localStorage.getItem('user');
+  user = this.userData ? JSON.parse(this.userData) : null;
+  
   ngOnInit(): void {
     this.getAllTasks();
   }
-
+  
   // Fetch all tasks and organize them by status
   getAllTasks(): void {
-    this.taskService.getTasks().subscribe({
-      next: (response: any) => {
+    this.taskService.getTasks().subscribe(
+      (response: any) => {
         if (response.success && response.tasks) {
-
-          // Group tasks by status
-          response.tasks.forEach((task: any) => {
-            const category = this.taskStatus.find((item) => {return item.status === this.mapStatus(task.status) && this.user._id == task.createdBy});
-            if (category) {
-              category.tasks.push({
-                _id: task._id,
-                title: task.title,
-                status: task.status,
-                description: task.description,
-                category: task.category,
-                priority: task.priority,
-                deadline: task.deadline,
-                createdBy: task.createdBy,
-                createdAt: task.createdAt,
-                updatedAt: task.updatedAt
-              });
-            }
-          });
-
+          this.organizeTasks(response.tasks);
           console.log('Grouped tasks:', this.taskStatus);
-        } else {
-          console.error('Unexpected response format:', response);
         }
       },
-      error: (error) => {
+      (error) => {
         console.error('Error fetching tasks:', error);
-      },
+      }
+    );
+  }
+  
+  private organizeTasks(tasks: any[]): void {
+    tasks.forEach((task: any) => {
+      const category = this.taskStatus.find(
+        (item) => item.status === this.mapStatus(task.status) && this.user._id == task.createdBy
+      );
+  
+      if (category) {
+        category.tasks.push({
+          _id: task._id,
+          title: task.title,
+          status: task.status,
+          description: task.description,
+          category: task.category,
+          priority: task.priority,
+          deadline: task.deadline,
+          createdBy: task.createdBy,
+          createdAt: task.createdAt,
+          updatedAt: task.updatedAt,
+        });
+      }
     });
   }
+  
   mapStatus(apiStatus: string): string {
     switch (apiStatus) {
       case 'Todo':
@@ -77,6 +79,7 @@ export class TaskBoardComponent implements OnInit {
         return '';
     }
   }
+  
 
   // Toggle the sidebar
   toggleSidebar(): void {

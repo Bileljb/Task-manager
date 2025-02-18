@@ -29,61 +29,54 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const taskId = this.route.snapshot.paramMap.get('id');
-    if (taskId) {
-      this.fetchTask(taskId);
-    } else {
-      console.error('Task ID is missing in the route!');
-      this.closeDetails();
-    }
+    taskId ? this.fetchTask(taskId) : this.handleMissingTaskId();
   }
-
+  
+  private handleMissingTaskId(): void {
+    console.error('Task ID is missing in the route!');
+    this.closeDetails();
+  }
+  
   fetchTask(taskId: string): void {
-    if (!taskId) {
-      console.error('Invalid task ID provided!');
-      return;
-    }
-
-    this.taskService.getTaskById(taskId).subscribe({
-      next: (response: { success: boolean; task: any }) => {
+    this.taskService.getTaskById(taskId).subscribe(
+      (response: { success: boolean; task: any }) => {
         if (response.success && response.task) {
           this.task = response.task;
-          this.editableTask = { ...this.task }; // Clone the task for editing
+          this.editableTask = { ...response.task }; 
         }
       },
-      error: (err: any) => {
-        console.error('Failed to fetch task:', err);
-      },
-    });
+      (error) => {
+        this.errorMessage = error.error?.message || 'Failed to fetch task.';
+      }
+    );
   }
+  
+  
 
-  updateTask() {
-    if (this.editableTask._id) {
-      const updatedTask = {
-        ...this.editableTask,
-        updatedAt: new Date(), // Update the timestamp
-      };
-  
-      console.log('Attempting to update task:', updatedTask);
-  
-      this.taskService.updateTask(updatedTask).subscribe(
-        (response) => {
-          if (response.success) {
-            this.task = response.task;
-            console.log('Task updated successfully:', this.task);
-          }
-        },
-        (error) => {
-          this.errorMessage = error.error?.message;
-        }
-      );
-    } else {
+  updateTask(): void {
+    if (!this.editableTask._id) {
       console.error('Task ID is missing or invalid!');
+      return;
     }
+  
+    const updatedTask = { ...this.editableTask, updatedAt: new Date() };
+    console.log('Attempting to update task:', updatedTask);
+  
+    this.taskService.updateTask(updatedTask).subscribe(
+      ({ success, task }) => {
+        if (success && task) {
+          this.task = task;
+          console.log('Task updated successfully:', task);
+        }
+      },
+      (error) => (this.errorMessage = error.error?.message || 'Failed to update task.')
+    );
   }
+  
   
   
 
   closeDetails(): void {
-    this.router.navigate(['/task-board']); // Navigate back to the task board
+    this.router.navigate(['/task-board']);
   }
 }

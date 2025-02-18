@@ -41,7 +41,6 @@ export class AdminDashboardComponent {
   getAllEmployees(){
      this.adminService.getEmployees().subscribe(data => {
       this.employees = data.employees
-      console.log(data); 
     });
   }
   

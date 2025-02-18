@@ -1,76 +1,58 @@
-<body>
+<body *ngIf="employee">
     <div class="container">
-        <!-- Left Sidebar -->
-        <div>
-            <div class="sidebar">
-                <div class="card-body">
-                    <img src="../../../../public/blank-profile-picture-.jpg" class="rounded-circle" width="150">
-                    <div class="mt-3">
-                        <h3>John Doe</h3>
-                        <a href="">Efficiency: </a>
-                        <a href="">Assigne a task</a>
-                    </div>
-                </div>
+      <!-- Left Sidebar -->
+      <div>
+        <div class="sidebar">
+          <div class="card-body">
+            <img src="../../../../public/blank-profile-picture-.jpg" class="rounded-circle" width="150" *ngIf="employee?.profilePicture">
+            <div class="mt-3">
+              <h3>{{ employee.firstname }}</h3>
+              <p>Efficiency: 0.95</p>
+              <a href="#">Assign a task</a>
             </div>
-
-            <!-- About Section Below Sidebar -->
-            <div class="about">
-                <h1>About</h1>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <h5>Full name</h5>
-                        </div>
-                        <div class="col-md-9 text-secondary">
-                            John Doe
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <h5>Email</h5>
-                        </div>
-                        <div class="col-md-9 text-secondary">
-                            abcgmail.com
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-
-        <!-- Right Side Content -->
-        <div class="right-content">
-            <div class="recent-tasks">
-                <h1>Recent Tasks</h1>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <h5>Task 1</h5>
-                        </div>
-                        <div class="col-md-9 text-secondary">
-                            Task description goes here.
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <h5>Task 2</h5>
-                        </div>
-                        <div class="col-md-9 text-secondary">
-                            Another task description here.
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <h5>Task 3</h5>
-                        </div>
-                        <div class="col-md-9 text-secondary">
-                            Yet another task description.
-                        </div>
-                    </div>
-                </div>
+  
+        <div class="about">
+          <h1>About</h1>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3">
+                <h5>Full name</h5>
+              </div>
+              <div class="col-md-9 text-secondary">
+                {{ employee.firstname }} {{ employee.lastname }}
+              </div>
             </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-3">
+                <h5>Email</h5>
+              </div>
+              <div class="col-md-9 text-secondary">
+                {{ employee.email }}
+              </div>
+            </div>
+          </div>
         </div>
-    </div> 
-</body>
+      </div>
+  
+      <!-- Right Side Content -->
+      <div class="right-content">
+        <div class="recent-tasks">
+          <h1>Recent Tasks</h1>
+          <div class="card-body">
+            <div class="row" *ngFor="let task of employee.tasks">
+              <div class="col-md-3">
+                <h5>{{ task.title }}</h5>
+              </div>
+              <div class="col-md-9 text-secondary">
+                {{ task.description }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  
