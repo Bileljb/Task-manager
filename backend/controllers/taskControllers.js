@@ -32,8 +32,7 @@ export const createTask = async (req, res) => {
             });
         }
 
-        // Push task ID to the user's task list
-        user.tasks.push(task._id);
+        user.tasks.push(task);
 
         // Save both task and user
         await task.save();

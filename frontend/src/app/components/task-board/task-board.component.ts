@@ -87,7 +87,7 @@ export class TaskBoardComponent implements OnInit {
   }
   
   deleteTask(event: MouseEvent, taskId: string): void {
-    event.stopPropagation(); // Prevents the click event from propagating to the parent element
+    event.stopPropagation();
     
     if (confirm('Are you sure you want to delete this task?')) {
       this.taskService.deleteTask(taskId).subscribe({

@@ -16,7 +16,7 @@ const Userschema = new mongoose.Schema({
     position: {type: String},
     tasks: [
         {
-          type: mongoose.Schema.Types.ObjectId,
+          type: Object,
           ref: 'Task', // Reference to the Task model
         },
     ],

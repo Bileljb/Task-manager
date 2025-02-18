@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProfilePageComponent implements OnInit {
   employee: any = null;
+  tasks: any = null;
   errorMessage: string = '';
   successMessage: string = '';
 
@@ -36,8 +37,10 @@ export class ProfilePageComponent implements OnInit {
       next: (response: { success: boolean; message: string; employee: any }) => {
         if (response.success && response.employee) {
           this.employee = response.employee;
+          this.tasks = response.employee.tasks;
           this.successMessage = response.message;
           console.log(this.employee)
+          console.log(this.tasks)
         }
       },
       error: (error) => {
