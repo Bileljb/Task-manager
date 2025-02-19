@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthServiceService } from '../../services/auth-service.service';
-import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -20,18 +20,16 @@ export class LoginComponent {
 
   onLogin() {
     if (this.email && this.password) {
-      
-      this.authService.login(this.email, this.password).subscribe(
-        (response) => {
+      this.authService.login(this.email, this.password).subscribe({
+        next: (response) => {
           localStorage.setItem('token', response.token);
-          localStorage.setItem('user', JSON.stringify(response.user));
           this.successMessage = response.message;
-          this.router.navigate(['/task-board']); // Redirect to the dashboard on success
+          this.router.navigate(['/task-board']);
         },
-        (error) => {
-          this.errorMessage = error.error?.message 
+        error: (error) => {
+          this.errorMessage = error.error?.message || 'Login failed!';
         }
-      );
+      });
     }
   }
 }

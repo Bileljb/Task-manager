@@ -14,12 +14,6 @@ const Userschema = new mongoose.Schema({
     },
     team: {type: String},
     position: {type: String},
-    tasks: [
-        {
-          type: Object,
-          ref: 'Task', // Reference to the Task model
-        },
-    ],
     lastLogin:{
         type: Date,
         default: Date.now

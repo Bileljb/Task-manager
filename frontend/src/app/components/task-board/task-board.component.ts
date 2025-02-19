@@ -1,35 +1,37 @@
 import { Component, OnInit, inject, Input } from '@angular/core';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { TaskServiceService } from '../../services/task-service.service';
-import {Task, TaskCategory} from '../../models/task.model';
-import { RouterLink,Router } from '@angular/router';
+import { Task, TaskCategory } from '../../models/task.model';
+import { RouterLink, Router } from '@angular/router';
 import { taskStatus } from '../../States/taskState';
 import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { AuthServiceService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-task-board',
-  imports: [ CommonModule, RouterLink, DragDropModule,CdkDropList],
+  imports: [CommonModule, RouterLink, DragDropModule, CdkDropList],
   templateUrl: './task-board.component.html',
   styleUrls: ['./task-board.component.css'],
 })
 export class TaskBoardComponent implements OnInit {
-  constructor(private router: Router) {}
+  private authService = inject(AuthServiceService);
+  private taskService = inject(TaskServiceService);
+  private router: Router = inject(Router);
 
   taskStatus: TaskCategory[] = JSON.parse(JSON.stringify(taskStatus));
   @Input() task?: Task;
-  private taskService = inject(TaskServiceService);
-  
-  // Sidebar logic
+  user = JSON.parse(localStorage.getItem('user') || '{}');
   isCollapsed = false;
-  userData = localStorage.getItem('user');
-  user = this.userData ? JSON.parse(this.userData) : null;
-  
+
   ngOnInit(): void {
-    this.getAllTasks();
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']); // Redirect if not logged in
+    } else {
+      this.getAllTasks();
+    }
   }
-  
-  // Fetch all tasks and organize them by status
+
   getAllTasks(): void {
     this.taskService.getTasks().subscribe(
       (response: any) => {
@@ -43,13 +45,13 @@ export class TaskBoardComponent implements OnInit {
       }
     );
   }
-  
+
   private organizeTasks(tasks: any[]): void {
     tasks.forEach((task: any) => {
       const category = this.taskStatus.find(
-        (item) => item.status === this.mapStatus(task.status) && this.user._id == task.createdBy
+        (item) => item.status === this.mapStatus(task.status)
       );
-  
+
       if (category) {
         category.tasks.push({
           _id: task._id,
@@ -66,7 +68,7 @@ export class TaskBoardComponent implements OnInit {
       }
     });
   }
-  
+
   mapStatus(apiStatus: string): string {
     switch (apiStatus) {
       case 'Todo':
@@ -79,23 +81,20 @@ export class TaskBoardComponent implements OnInit {
         return '';
     }
   }
-  
 
-  // Toggle the sidebar
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
   }
-  
+
   deleteTask(event: MouseEvent, taskId: string): void {
     event.stopPropagation();
-    
+
     if (confirm('Are you sure you want to delete this task?')) {
       this.taskService.deleteTask(taskId).subscribe({
         next: (response) => {
           if (response.success) {
             this.taskStatus.forEach((category) => {
               category.tasks = category.tasks.filter((task) => task._id !== taskId);
-              
             });
             console.log('Task deleted successfully:', response.message);
           }
@@ -106,19 +105,16 @@ export class TaskBoardComponent implements OnInit {
       });
     }
   }
+
   drop(event: CdkDragDrop<Task[]>, newStatus: string): void {
     if (event.previousContainer !== event.container) {
       const task = event.previousContainer.data[event.previousIndex];
-  
-      // Remove task from the previous column
+
       event.previousContainer.data.splice(event.previousIndex, 1);
-  
-      // Add task to the new column
       event.container.data.splice(event.currentIndex, 0, task);
-  
-      // Update task's status
+
       if (newStatus === 'Todo' || newStatus === 'In Progress' || newStatus === 'Completed') {
-        task.status = newStatus; // Update the status in the model
+        task.status = newStatus;
         this.taskService.updateTaskStatus(task._id, newStatus).subscribe({
           next: () => console.log('Task status updated successfully'),
           error: (err) => console.error('Failed to update task status:', err),
@@ -128,11 +124,9 @@ export class TaskBoardComponent implements OnInit {
       }
     }
   }
+
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user')
-    this.router.navigate(['/']);
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
-
 }
-

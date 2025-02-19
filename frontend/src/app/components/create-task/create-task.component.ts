@@ -1,29 +1,28 @@
-import { Component, Output, EventEmitter, } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskServiceService } from '../../services/task-service.service';
+import { AuthServiceService } from '../../services/auth-service.service';
 import { CommonModule, NgFor } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-create-task',
   imports: [NgFor, FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './create-task.component.html',
   styleUrl: './create-task.component.css'
 })
-export class CreateTaskComponent {
+export class CreateTaskComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
-  userData = localStorage.getItem('user')
-  userId = this.userData ? JSON.parse(this.userData)._id : null;
   task: any = {
     title: '',
     category: '',
     priority: '',
     status: '',
     deadline: '',
-    createdBy: this.userId,
+    createdBy: ''
   };
   successMessage: string = '';
   errorMessage: string = '';
-
 
   categories = ['Work', 'Personal', 'Study', 'Other'];
   priorities = ['Low', 'Medium', 'High'];
@@ -32,12 +31,27 @@ export class CreateTaskComponent {
   constructor(
     private route: ActivatedRoute,
     private taskService: TaskServiceService,
+    private authService: AuthServiceService,
     private router: Router
-  ) { }
+  ) {}
+
+  ngOnInit() {
+    if (!this.authService.isAuthenticated()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    const user = this.authService.getUser();
+    if (user) {
+      this.task.createdBy = user.id
+    } else {
+      this.errorMessage = 'User not found. Please log in again.';
+      this.router.navigate(['/login']);
+    }
+  }
 
   createTask() {
     if (this.task) {
-      this.task.createdBy = this.userId;
       this.taskService.createTask(this.task).subscribe(
         (response) => {
           if (response.success && response.task) {
