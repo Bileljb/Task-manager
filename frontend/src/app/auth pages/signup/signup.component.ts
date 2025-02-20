@@ -17,6 +17,10 @@ export class SignupComponent {
     lastname: '',
     email: '',
     password: '',
+    role: '',
+    lastLogin: '',
+    createdAt: '',
+    updatedAt: '',
   };
   errorMessage: string = '';
   successMessage: string = '';

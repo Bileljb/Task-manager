@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../../services/adminService/admin.service';
 import { CommonModule } from '@angular/common';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-profile-page',
@@ -10,22 +11,29 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./profile-page.component.css'],
 })
 export class ProfilePageComponent implements OnInit {
+  tasks: Task[] = [];
   employee: any = null;
-  tasks: any = null;
   errorMessage: string = '';
   successMessage: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private adminService: AdminService
+    private adminService: AdminService,
+    
+    
   ) {}
 
   ngOnInit(): void {
     const employeeId = this.route.snapshot.paramMap.get('id');
-    console.log(employeeId)
-    employeeId ? this.fetchEmployee(employeeId) : this.handleMissingEmployeeId();
+    if (employeeId) {
+      this.fetchEmployee(employeeId);
+    } else {
+      this.handleMissingEmployeeId();
+    }
   }
+  
+  
 
   private handleMissingEmployeeId(): void {
     console.error('Employee ID is missing in the route!');
@@ -34,13 +42,16 @@ export class ProfilePageComponent implements OnInit {
 
   fetchEmployee(employeeId: string): void {
     this.adminService.getEmployeeById(employeeId).subscribe({
-      next: (response: { success: boolean; message: string; employee: any }) => {
-        if (response.success && response.employee) {
+      next: (response: { success: boolean; message: string; employee: any; employeeTasks: any }) => {
+        if (response.success && response.employee && response.employeeTasks) {
           this.employee = response.employee;
-          this.tasks = response.employee.tasks;
+          this.tasks = [...response.employeeTasks] 
           this.successMessage = response.message;
           console.log(this.employee)
-          console.log(this.tasks)
+        }
+        else if(response.success && response.employee && !response.employeeTasks){
+          this.employee = response.employee;
+          console.log('There are no recent tasks');
         }
       },
       error: (error) => {
@@ -48,6 +59,9 @@ export class ProfilePageComponent implements OnInit {
       },
     });
   }
+
+
+  
 
   closeDetails(): void {
     this.router.navigate(['/tm-admin']);

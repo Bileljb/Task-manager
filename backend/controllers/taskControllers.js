@@ -158,6 +158,7 @@ export const searchTask = async (req, res) => {
           { description: regex },
           { category: regex },
           { priority: regex },
+          { createdBy}
         ],
       });
 
@@ -178,4 +179,4 @@ export const searchTask = async (req, res) => {
       });
     }
   };
-  
+

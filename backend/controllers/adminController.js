@@ -17,18 +17,19 @@ export const getEmployees = async (req, res) => {
     }
 }
 
-export const getEmployee = async (req, res) => {
+export const getEmployeeDetails = async (req, res) => {
     const { id } = req.params
     console.log(`Fetching Employee with id = ${id}`)
     try {
         const employee = await User.findById(id)
-        if (!employee) {
+        const employeeTasks = await Task.find({createdBy:employee._id})
+        if (!employee ) {
             return res.status(404).json({
                 success: false,
                 message: "No Employee founded"
             })
         }
-        res.status(200).json({ success: true, message: "Employee loaded successfully!", employee })
+        res.status(200).json({ success: true, message: "Employee loaded successfully!", employee, employeeTasks })
     } catch (error) {
         console.log("Something went wrong, Employee did not loaded!")
         res.status(400).json({ success: false, message: error.message })

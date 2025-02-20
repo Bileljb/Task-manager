@@ -44,7 +44,7 @@ export const routes: Routes = [
     {
         path:'tm-admin',
         component:AdminDashboardComponent,
-        // canActivate: [authGuard]
+        canActivate: [authGuard]
     },
     {
         path:'employee-profile/:id',
